@@ -1,0 +1,14 @@
+# Line endings are normalised in the repository, so a checkout is identical on Linux CI and on a
+# Windows developer machine regardless of anyone's local core.autocrlf setting. Without this file
+# the committed line endings depend on who ran `git add`, which is exactly the kind of hidden
+# machine state the clean-setup experiment in results/ exists to remove.
+* text=auto
+
+# Shell scripts must keep LF even when checked out on Windows: a CRLF shebang line is not runnable.
+*.sh text eol=lf
+
+# Binary-ish assets git should never try to normalise.
+*.png binary
+*.jpg binary
+*.pdf binary
+*.trx binary

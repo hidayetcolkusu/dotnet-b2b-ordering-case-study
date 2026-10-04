@@ -1,0 +1,54 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Read-only by default: nothing in this workflow writes to the repository.
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          # global.json pins 10.0.400 with rollForward disabled, so the exact SDK is installed.
+          global-json-file: global.json
+
+      - name: Restore local tools
+        run: dotnet tool restore
+
+      - name: Restore (locked)
+        run: dotnet restore --locked-mode
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Verify formatting
+        run: dotnet format --verify-no-changes --no-restore
+
+      # No SQL service container: Testcontainers owns the test database, exactly as it does
+      # locally, so there is only one way a test database is ever created.
+      - name: Test
+        run: dotnet test --no-build --configuration Release -- --report-trx --report-trx-filename ci.trx
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          # Microsoft.Testing.Platform writes the report to <repo>/TestResults/, at the root
+          # rather than under the test project, so the root pattern is listed explicitly instead
+          # of relying on `**/` matching zero directories.
+          path: |
+            TestResults/*.trx
+            **/TestResults/*.trx
+          if-no-files-found: error

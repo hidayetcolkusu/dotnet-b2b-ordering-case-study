@@ -1,0 +1,31 @@
+# Development database only. Tests never use this container: Testcontainers owns the test
+# database, so the two never share a port, a password or a server instance.
+#
+# The container name and host port are variables so a second, disposable instance can be brought
+# up beside the development one without colliding with it - that is what the clean-setup
+# experiment in results/ does. The defaults are the ordinary development values, so
+# `docker compose up -d` is unchanged.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server@sha256:97b448857967be55e005424a660056fe6d51814435804dc07e8f79f028bab5fb
+    container_name: ${MSSQL_CONTAINER_NAME:-b2b-ordering-dev-mssql}
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?set MSSQL_SA_PASSWORD in your local .env file}
+    ports:
+      # Loopback only: the development database is never reachable from the network.
+      - "127.0.0.1:${MSSQL_HOST_PORT:-14330}:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -Q "SELECT 1" -b
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+volumes:
+  mssql-data:

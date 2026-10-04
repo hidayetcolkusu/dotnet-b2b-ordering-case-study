@@ -1,0 +1,129 @@
+################################################################################
+# .gitignore for a .NET solution.
+#
+# Two things are deliberately NOT ignored, because the repository depends on them:
+#   packages.lock.json      -> required by `dotnet restore --locked-mode` and by CI
+#   .config/dotnet-tools.json -> pins dotnet-ef, so `dotnet tool restore` is reproducible
+################################################################################
+
+# ------------------------------------------------------------- local tooling
+.claude/
+CLAUDE.md
+AGENTS.md
+.cursor/
+.aider*
+.github/copilot-instructions.md
+.serena/
+
+# ---------------------------------------------------------------- local secrets
+# Holds the development SQL Server password. The connection string itself lives in
+# dotnet user-secrets, outside the repository entirely.
+.env
+.env.local
+*.pfx
+*.p12
+*.key
+
+# ------------------------------------------------------------------ build output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Dd]ebug/
+[Rr]elease/
+[Ll]og/
+[Ll]ogs/
+artifacts/
+publish/
+[Pp]ublish[Oo]utput/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.tlog
+project.lock.json
+project.fragment.lock.json
+
+# --------------------------------------------------------------------- MSBuild
+msbuild.log
+msbuild.err
+msbuild.wrn
+*.binlog
+*.msbuild.log
+*.tlb
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+
+# ------------------------------------------------------------------ test output
+[Tt]est[Rr]esults/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+[Cc]overage/
+*.received.*
+BenchmarkDotNet.Artifacts/
+
+# ----------------------------------------------------------------------- NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+.nuget/
+*.nuget.props
+*.nuget.targets
+
+# ------------------------------------------------------------- Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.VisualState.xml
+*.psess
+*.vsp
+*.vspx
+*.sap
+*_i.c
+*_p.c
+*_h.h
+*.opendb
+*.opensdf
+*.sdf
+*.ncrunch*
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# ------------------------------------------------------------ Rider / VS Code
+.idea/
+*.sln.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+
+# -------------------------------------------------------------- OS / editor
+.DS_Store
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+*.rej
+*.tmp

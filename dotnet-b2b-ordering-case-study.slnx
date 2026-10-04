@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/Migration.V1/Migration.V1.csproj" />
+    <Project Path="samples/Migration.V2/Migration.V2.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/B2B.Ordering.Api/B2B.Ordering.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/B2B.Ordering.Tests/B2B.Ordering.Tests.csproj" />
+  </Folder>
+</Solution>
