@@ -8,7 +8,7 @@ under [`history/`](history/).
 | Item | Value |
 |---|---|
 | Date | 2026-10-04, Europe/Istanbul |
-| Source commit | see [Commit and CI](#commit-and-ci) |
+| Source commit | `bdd6354` — see [Commit and CI](#commit-and-ci) |
 | .NET SDK | `10.0.400` (pinned in `global.json`, `rollForward: disable`); runtime `Microsoft.AspNetCore.App 10.0.11` |
 | Local machine | Windows 11 Pro 10.0.26200, Docker Desktop 29.6.1 (Linux containers) |
 | CI | GitHub Actions, `ubuntu-latest`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) |
@@ -65,7 +65,15 @@ All six migrations are exercised against real SQL Server:
 
 ## Commit and CI
 
-Filled in once the commit containing this tree has run on GitHub Actions.
+| Item | Value |
+|---|---|
+| Verified source commit | `bdd6354aac957423d85575a57a37e6a6407dec49` (`main`) |
+| Local run | the commands above, in the working tree: 116/116 |
+| Fresh clone | `git clone` from GitHub into a short path, then the same five commands: 0 warnings, format clean, **116/116** |
+| GitHub Actions | [ci run 37213428789](https://github.com/hidayetcolkusu/dotnet-b2b-ordering-case-study/actions/runs/37213428789) on `bdd6354`: **success**, log reports `total: 116, failed: 0, succeeded: 116` |
+
+Commits after `bdd6354` change only this file; each runs the same workflow, and the badge in the
+README shows the result for the current `main`.
 
 ## Known verification limits
 
